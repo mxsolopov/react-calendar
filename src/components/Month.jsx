@@ -2,7 +2,7 @@ import React from 'react';
 import './Month.css';
 import classNames from 'classnames';
 
-const Month = ({ monthNum, daysNum, startMonthDay, year, startDate, setStartDate, endDate, setEndDate }) => {
+const Month = ({ monthNum, daysNum, startMonthDay, year, store, setStore }) => {
 
     const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
     let now = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
@@ -18,31 +18,35 @@ const Month = ({ monthNum, daysNum, startMonthDay, year, startDate, setStartDate
     function clickHandler(date) {
 
         // Начальный выбор даты отсчёта
-        if (!startDate) {
-            setStartDate(date);
-
-
+        if (!store.startDate) {
+            setStore({...store, startDate: date});
         } else {
-            if (date === startDate) {
-                setStartDate(null);
-                setEndDate(null);
+            if (date === store.startDate) {
+                setStore({...store, startDate: null, endDate: null});
             }
         }
 
-        if (startDate && !endDate) {
+        if (store.startDate && !store.endDate) {
 
-            if (date > startDate) {
-                setEndDate(date);
-            } else if (date === startDate) {
-                setStartDate(null);
+            if (date > store.startDate) {
+                setStore({...store, endDate: date});
+
+
+            } else if (date === store.startDate) {
+                setStore({...store, startDate: null});
+
             } else {
-                setStartDate(date);
+
+                setStore({...store, startDate: date});
+
+                // Выбор в обратном направлении
+                // setStartDate(date)
+                // setEndDate(startDate);
             }
         }
 
-        if (startDate && endDate) {
-            setEndDate(null);
-            setStartDate(date);
+        if (store.startDate && store.endDate) {
+            setStore({...store, endDate: null, startDate: date});
         }
     }
 
@@ -62,14 +66,14 @@ const Month = ({ monthNum, daysNum, startMonthDay, year, startDate, setStartDate
                 {generateDaysArr(daysNum).map((day, index) => {
                     const date = new Date(year, monthNum, day).getTime();
                     const currentDay = now === date ? 'current-day' : null;
-                    const startDay = startDate ?
-                        startDate === date ? 'selected-day' : null :
+                    const startDay = store.startDate ?
+                        store.startDate === date ? 'selected-day' : null :
                         null;
-                    const endDay = endDate ?
-                        endDate === date ? 'selected-day' : null :
+                    const endDay = store.endDate ?
+                        store.endDate === date ? 'selected-day' : null :
                         null;
-                    const dateRange = startDate && endDate ?
-                        startDate < date && endDate > date ? 'selected-day' : null : null;
+                    const dateRange = store.startDate && store.endDate ?
+                        store.startDate < date && store.endDate > date ? 'selected-day' : null : null;
 
                     if (index === 0) {
                         return <div

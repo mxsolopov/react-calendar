@@ -11,9 +11,11 @@ const App = () => {
   const currentYear = now.getFullYear();
 
   const [date, setDate] = useState({ month: currentMonth, year: currentYear });
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [value, setValue] = useState('');
+  const [store, setStore] = useState({startDate: null, endDate: null, diff: null})
+  // const [startDate, setStartDate] = useState(null);
+  // const [endDate, setEndDate] = useState(null);
+  // const [value, setValue] = useState("");
+  // const [inputState, setInputState] = useState('disabled');
 
   const prevMonth = date.month === 0 ? 11 : date.month - 1;
   const nextMonth = date.month === 11 ? 0 : date.month + 1;
@@ -50,20 +52,16 @@ const App = () => {
               calcStartDay(date.year - 1, prevMonth) :
               calcStartDay(date.year, prevMonth)}
             year={date.month === 0 ? date.year - 1 : date.year}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate} />
+            store={store}
+            setStore={setStore} />
 
           <Month
             monthNum={date.month}
             daysNum={monthLengthArr[date.month]}
             startMonthDay={calcStartDay(date.year, date.month)}
             year={date.year}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate} />
+            store={store}
+            setStore={setStore} />
 
           <Month
             monthNum={nextMonth}
@@ -72,13 +70,11 @@ const App = () => {
               calcStartDay(date.year + 1, nextMonth) :
               calcStartDay(date.year, nextMonth)}
             year={date.month === 11 ? date.year + 1 : date.year}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate} />
+            store={store}
+            setStore={setStore} />
         </div>
 
-        <div className="input-wrapper">
+        {/* <div className="input-wrapper">
           <div className="num-of-days-wrapper">
             <label htmlFor="num-of-days">Разница в днях: </label>
             <input
@@ -87,10 +83,10 @@ const App = () => {
               value={value}
               onChange={e => setValue(e.target.value)}
               className="num-of-days"
-              disabled="disabled"/>
+              disabled={inputState}/>
           </div>
 
-        </div>
+        </div> */}
 
       </div>
 
