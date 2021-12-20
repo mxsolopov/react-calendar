@@ -9,13 +9,22 @@ const App = () => {
   const now = new Date();
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
+  const msCoeff = 1000 * 60 * 60 * 24
 
   const [date, setDate] = useState({ month: currentMonth, year: currentYear });
-  const [store, setStore] = useState({startDate: null, endDate: null, diff: null})
-  // const [startDate, setStartDate] = useState(null);
-  // const [endDate, setEndDate] = useState(null);
-  // const [value, setValue] = useState("");
-  // const [inputState, setInputState] = useState('disabled');
+  const [store, setStore] = useState({ startDate: null, endDate: null });
+  const diff = store.startDate && store.endDate ? Math.floor((store.endDate - store.startDate) / msCoeff) : 0;
+
+  let input = !store.startDate ? 'Выберите дату на календаре для отсчёта' :
+    <div className="input-wrapper">
+      <label htmlFor="num-of-days">Интервал: </label>
+      <input
+        type="number"
+        id="num-of-days"
+        value={store.startDate || store.startDate && store.endDate ? diff : 0}
+        onChange={e => setStore({ ...store, endDate: store.startDate + +e.target.value * msCoeff })}
+        className="num-of-days" />
+    </div>;
 
   const prevMonth = date.month === 0 ? 11 : date.month - 1;
   const nextMonth = date.month === 11 ? 0 : date.month + 1;
@@ -74,19 +83,9 @@ const App = () => {
             setStore={setStore} />
         </div>
 
-        {/* <div className="input-wrapper">
-          <div className="num-of-days-wrapper">
-            <label htmlFor="num-of-days">Разница в днях: </label>
-            <input
-              type="number"
-              id="num-of-days"
-              value={value}
-              onChange={e => setValue(e.target.value)}
-              className="num-of-days"
-              disabled={inputState}/>
-          </div>
-
-        </div> */}
+        <div className="num-of-days-wrapper">
+          {input}
+        </div>
 
       </div>
 

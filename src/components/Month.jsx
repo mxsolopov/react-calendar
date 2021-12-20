@@ -20,31 +20,26 @@ const Month = ({ monthNum, daysNum, startMonthDay, year, store, setStore }) => {
         // Начальный выбор даты отсчёта
         if (!store.startDate) {
             setStore({...store, startDate: date});
-        } else {
-            if (date === store.startDate) {
-                setStore({...store, startDate: null, endDate: null});
-            }
         }
 
+        // Выбор конечной даты
         if (store.startDate && !store.endDate) {
 
+            // Выбор в положительную сторону
             if (date > store.startDate) {
                 setStore({...store, endDate: date});
 
-
+            // Отключение выбора начальной даты
             } else if (date === store.startDate) {
                 setStore({...store, startDate: null});
 
+            // Выбор в отрицательную сторону
             } else {
-
-                setStore({...store, startDate: date});
-
-                // Выбор в обратном направлении
-                // setStartDate(date)
-                // setEndDate(startDate);
+                setStore({...store, endDate: date, startDate: store.startDate});
             }
         }
 
+        // Выбор начальной даты заново
         if (store.startDate && store.endDate) {
             setStore({...store, endDate: null, startDate: date});
         }
@@ -64,7 +59,10 @@ const Month = ({ monthNum, daysNum, startMonthDay, year, store, setStore }) => {
             </div>
             <div className="calendar-container">
                 {generateDaysArr(daysNum).map((day, index) => {
+
                     const date = new Date(year, monthNum, day).getTime();
+
+                    // Классы для выделения дат цветом
                     const currentDay = now === date ? 'current-day' : null;
                     const startDay = store.startDate ?
                         store.startDate === date ? 'selected-day' : null :
@@ -73,7 +71,8 @@ const Month = ({ monthNum, daysNum, startMonthDay, year, store, setStore }) => {
                         store.endDate === date ? 'selected-day' : null :
                         null;
                     const dateRange = store.startDate && store.endDate ?
-                        store.startDate < date && store.endDate > date ? 'selected-day' : null : null;
+                        store.startDate < date && store.endDate > date ||
+                        store.startDate > date && store.endDate < date ? 'selected-day' : null : null;
 
                     if (index === 0) {
                         return <div
