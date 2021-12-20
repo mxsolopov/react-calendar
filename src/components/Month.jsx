@@ -5,7 +5,7 @@ import classNames from 'classnames';
 const Month = ({ monthNum, daysNum, startMonthDay, year, startDate, setStartDate, endDate, setEndDate }) => {
 
     const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-    let now = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    let now = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
 
     function generateDaysArr(num) {
         let arr = [];
@@ -23,7 +23,7 @@ const Month = ({ monthNum, daysNum, startMonthDay, year, startDate, setStartDate
 
 
         } else {
-            if (date.getTime() === startDate.getTime()) {
+            if (date === startDate) {
                 setStartDate(null);
                 setEndDate(null);
             }
@@ -31,9 +31,9 @@ const Month = ({ monthNum, daysNum, startMonthDay, year, startDate, setStartDate
 
         if (startDate && !endDate) {
 
-            if (date.getTime() > startDate.getTime()) {
+            if (date > startDate) {
                 setEndDate(date);
-            } else if (date.getTime() === startDate.getTime()) {
+            } else if (date === startDate) {
                 setStartDate(null);
             } else {
                 setStartDate(date);
@@ -60,16 +60,16 @@ const Month = ({ monthNum, daysNum, startMonthDay, year, startDate, setStartDate
             </div>
             <div className="calendar-container">
                 {generateDaysArr(daysNum).map((day, index) => {
-                    const date = new Date(year, monthNum, day);
-                    const currentDay = now.getTime() === date.getTime() ? 'current-day' : null;
+                    const date = new Date(year, monthNum, day).getTime();
+                    const currentDay = now === date ? 'current-day' : null;
                     const startDay = startDate ?
-                        startDate.getTime() === date.getTime() ? 'selected-day' : null :
+                        startDate === date ? 'selected-day' : null :
                         null;
                     const endDay = endDate ?
-                        endDate.getTime() === date.getTime() ? 'selected-day' : null :
+                        endDate === date ? 'selected-day' : null :
                         null;
                     const dateRange = startDate && endDate ?
-                        startDate.getTime() < date.getTime() && endDate.getTime() > date.getTime() ? 'selected-day' : null : null;
+                        startDate < date && endDate > date ? 'selected-day' : null : null;
 
                     if (index === 0) {
                         return <div

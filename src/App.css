@@ -18,3 +18,15 @@
   display: flex;
   justify-content: space-between;
 }
+
+.num-of-days-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.num-of-days {
+  padding: 8px;
+  display: block;
+  margin-left: 10px;
+}

@@ -13,6 +13,7 @@ const App = () => {
   const [date, setDate] = useState({ month: currentMonth, year: currentYear });
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [value, setValue] = useState('');
 
   const prevMonth = date.month === 0 ? 11 : date.month - 1;
   const nextMonth = date.month === 11 ? 0 : date.month + 1;
@@ -75,6 +76,20 @@ const App = () => {
             setStartDate={setStartDate}
             endDate={endDate}
             setEndDate={setEndDate} />
+        </div>
+
+        <div className="input-wrapper">
+          <div className="num-of-days-wrapper">
+            <label htmlFor="num-of-days">Разница в днях: </label>
+            <input
+              type="number"
+              id="num-of-days"
+              value={value}
+              onChange={e => setValue(e.target.value)}
+              className="num-of-days"
+              disabled="disabled"/>
+          </div>
+
         </div>
 
       </div>
