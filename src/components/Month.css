@@ -1,0 +1,31 @@
+.days-of-week-container,
+.calendar-container {
+  display: grid;
+  text-align: center;
+  grid-template-columns: repeat(7, 30px);
+  grid-gap: 10px 10px;
+}
+
+.days-of-week-container div {
+  font-weight: 700;
+}
+
+.days-of-week-container {
+  margin-bottom: 10px;
+}
+
+.calendar-container div {
+  cursor: pointer;
+  height: 30px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.current-day {
+  background-color: blue;
+  color: white;
+  border-radius: 50%;
+}
