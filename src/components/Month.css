@@ -29,3 +29,9 @@
   color: white;
   border-radius: 50%;
 }
+
+.selected-day {
+  background-color: green;
+  color: white;
+  border-radius: 50%;
+}

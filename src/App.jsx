@@ -12,6 +12,7 @@ const App = () => {
 
   const [date, setDate] = useState({ month: currentMonth, year: currentYear });
   const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const prevMonth = date.month === 0 ? 11 : date.month - 1;
   const nextMonth = date.month === 11 ? 0 : date.month + 1;
@@ -49,7 +50,9 @@ const App = () => {
               calcStartDay(date.year, prevMonth)}
             year={date.month === 0 ? date.year - 1 : date.year}
             startDate={startDate}
-            setStartDate={setStartDate} />
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate} />
 
           <Month
             monthNum={date.month}
@@ -57,7 +60,9 @@ const App = () => {
             startMonthDay={calcStartDay(date.year, date.month)}
             year={date.year}
             startDate={startDate}
-            setStartDate={setStartDate} />
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate} />
 
           <Month
             monthNum={nextMonth}
@@ -67,7 +72,9 @@ const App = () => {
               calcStartDay(date.year, nextMonth)}
             year={date.month === 11 ? date.year + 1 : date.year}
             startDate={startDate}
-            setStartDate={setStartDate} />
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate} />
         </div>
 
       </div>
