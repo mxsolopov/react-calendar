@@ -4,8 +4,6 @@ import Month from './components/Month';
 
 const App = () => {
 
-  const monthLengthArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
   const now = new Date();
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
@@ -21,7 +19,7 @@ const App = () => {
       <input
         type="number"
         id="num-of-days"
-        value={store.startDate || store.startDate && store.endDate ? diff : 0}
+        value={store.startDate || (store.startDate && store.endDate) ? diff : 0}
         onChange={e => setStore({ ...store, endDate: store.startDate + +e.target.value * msCoeff })}
         className="num-of-days" />
     </div>;
@@ -56,7 +54,6 @@ const App = () => {
         <div className="months-wrapper">
           <Month
             monthNum={prevMonth}
-            daysNum={monthLengthArr[prevMonth]}
             startMonthDay={date.month === 0 ?
               calcStartDay(date.year - 1, prevMonth) :
               calcStartDay(date.year, prevMonth)}
@@ -66,7 +63,6 @@ const App = () => {
 
           <Month
             monthNum={date.month}
-            daysNum={monthLengthArr[date.month]}
             startMonthDay={calcStartDay(date.year, date.month)}
             year={date.year}
             store={store}
@@ -74,7 +70,6 @@ const App = () => {
 
           <Month
             monthNum={nextMonth}
-            daysNum={monthLengthArr[nextMonth]}
             startMonthDay={date.month === 11 ?
               calcStartDay(date.year + 1, nextMonth) :
               calcStartDay(date.year, nextMonth)}

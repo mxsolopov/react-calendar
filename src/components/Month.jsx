@@ -2,10 +2,12 @@ import React from 'react';
 import './Month.css';
 import classNames from 'classnames';
 
-const Month = ({ monthNum, daysNum, startMonthDay, year, store, setStore }) => {
+const Month = ({ monthNum, startMonthDay, year, store, setStore }) => {
 
     const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-    let now = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
+    const monthLengthArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const daysNum = monthLengthArr[monthNum];
+    const now = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
 
     function generateDaysArr(num) {
         let arr = [];
@@ -71,8 +73,8 @@ const Month = ({ monthNum, daysNum, startMonthDay, year, store, setStore }) => {
                         store.endDate === date ? 'selected-day' : null :
                         null;
                     const dateRange = store.startDate && store.endDate ?
-                        store.startDate < date && store.endDate > date ||
-                        store.startDate > date && store.endDate < date ? 'selected-day' : null : null;
+                        (store.startDate < date && store.endDate > date) ||
+                        (store.startDate > date && store.endDate < date) ? 'selected-day' : null : null;
 
                     if (index === 0) {
                         return <div
